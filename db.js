@@ -14,7 +14,7 @@ const AUTH_KEY = 'imei_admin_session';
 // ── ADMIN CREDENTIALS (change these!) ──
 const ADMIN_CREDENTIALS = {
   username: 'admin',
-  password: 'admin123'
+  password: 'dildil5700697'
 };
 
 // ── SEED DATA for demo ──

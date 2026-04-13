@@ -924,3 +924,7 @@ body {
   .field-row     { flex-direction: column; }
   .field-row .field-group { min-width: unset; }
 }
+
+/* TikTok button */
+.tiktok-btn { background: #010101; color: white; }
+.tiktok-btn:hover { background: #ff0050; }
