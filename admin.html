@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel – USA Mobile Zone IMEI Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body class="admin-body">
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="login-logo">🔐</div>
+      <h1 class="login-title">Admin Login</h1>
+      <p class="login-sub">USA Mobile Zone — IMEI Tracker</p>
+      <div class="field-group">
+        <input type="text" id="adminUser" class="field-input" placeholder="Username" autocomplete="off" />
+      </div>
+      <div class="field-group">
+        <input type="password" id="adminPass" class="field-input" placeholder="Password" onkeydown="if(event.key==='Enter')adminLogin()" />
+      </div>
+      <div id="loginError" class="login-error hidden">❌ Invalid username or password</div>
+      <button class="submit-btn" onclick="adminLogin()">Login →</button>
+      <div class="login-hint">Default: admin / admin123</div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div id="adminPanel" class="hidden">
+    <header class="admin-header">
+      <div class="admin-logo">
+        <span class="logo-icon">📱</span>
+        <span class="brand-name">USA Mobile Zone — Admin</span>
+      </div>
+      <div class="admin-nav">
+        <button class="tab-btn active" onclick="switchTab('pending')">⏳ Pending <span id="pendingBadge" class="badge"></span></button>
+        <button class="tab-btn" onclick="switchTab('approved')">✅ Approved</button>
+        <button class="tab-btn" onclick="switchTab('add')">➕ Add Record</button>
+        <button class="tab-btn" onclick="switchTab('stats')">📊 Stats</button>
+        <button class="logout-btn" onclick="adminLogout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="admin-content">
+
+      <!-- PENDING TAB -->
+      <div id="tab-pending" class="tab-panel">
+        <h2 class="panel-title">⏳ Pending Submissions</h2>
+        <div id="pendingList" class="records-list"></div>
+      </div>
+
+      <!-- APPROVED TAB -->
+      <div id="tab-approved" class="tab-panel hidden">
+        <div class="panel-header-row">
+          <h2 class="panel-title">✅ Approved Records</h2>
+          <input type="text" id="approvedSearch" class="search-mini" placeholder="Search IMEI / Model…" oninput="renderApproved()" />
+        </div>
+        <div id="approvedList" class="records-list"></div>
+      </div>
+
+      <!-- ADD RECORD TAB -->
+      <div id="tab-add" class="tab-panel hidden">
+        <h2 class="panel-title">➕ Add New Record</h2>
+        <div class="form-card">
+          <div class="field-row">
+            <div class="field-group half">
+              <label class="field-label">IMEI <span class="required">*</span></label>
+              <input type="tel" id="a_imei" class="field-input" placeholder="15-digit IMEI" maxlength="17" oninput="formatIMEI(this)" />
+            </div>
+            <div class="field-group half">
+              <label class="field-label">Phone Model</label>
+              <input type="text" id="a_model" class="field-input" placeholder="e.g. Samsung A54" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-group half">
+              <label class="field-label">Owner Name</label>
+              <input type="text" id="a_owner" class="field-input" placeholder="Owner's name" />
+            </div>
+            <div class="field-group half">
+              <label class="field-label">Contact</label>
+              <input type="tel" id="a_contact" class="field-input" placeholder="03XX-XXXXXXX" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-group half">
+              <label class="field-label">Date of Theft</label>
+              <input type="date" id="a_date" class="field-input" />
+            </div>
+            <div class="field-group half">
+              <label class="field-label">City</label>
+              <input type="text" id="a_city" class="field-input" value="Muzaffarabad" />
+            </div>
+          </div>
+          <button class="submit-btn" onclick="adminAddRecord()">➕ Add Record Directly</button>
+          <div id="addMsg" class="add-message hidden"></div>
+        </div>
+      </div>
+
+      <!-- STATS TAB -->
+      <div id="tab-stats" class="tab-panel hidden">
+        <h2 class="panel-title">📊 Statistics</h2>
+        <div class="stats-grid">
+          <div class="stat-big-card green">
+            <div class="stat-big-num" id="s_approved">0</div>
+            <div class="stat-big-lbl">Approved Records</div>
+          </div>
+          <div class="stat-big-card orange">
+            <div class="stat-big-num" id="s_pending">0</div>
+            <div class="stat-big-lbl">Pending Reports</div>
+          </div>
+          <div class="stat-big-card blue">
+            <div class="stat-big-num" id="s_checks">0</div>
+            <div class="stat-big-lbl">Total Checks</div>
+          </div>
+          <div class="stat-big-card red">
+            <div class="stat-big-num" id="s_today">0</div>
+            <div class="stat-big-lbl">Checks Today</div>
+          </div>
+        </div>
+        <div class="reset-section">
+          <button class="danger-btn" onclick="resetStats()">🗑️ Reset Today's Check Count</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div id="editModal" class="popup-overlay hidden">
+    <div class="popup-box edit-modal">
+      <h2 class="modal-title">✏️ Edit Record</h2>
+      <input type="hidden" id="e_id" />
+      <div class="field-row">
+        <div class="field-group half">
+          <label class="field-label">IMEI</label>
+          <input type="tel" id="e_imei" class="field-input" />
+        </div>
+        <div class="field-group half">
+          <label class="field-label">Model</label>
+          <input type="text" id="e_model" class="field-input" />
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group half">
+          <label class="field-label">Owner</label>
+          <input type="text" id="e_owner" class="field-input" />
+        </div>
+        <div class="field-group half">
+          <label class="field-label">Contact</label>
+          <input type="tel" id="e_contact" class="field-input" />
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group half">
+          <label class="field-label">Date</label>
+          <input type="date" id="e_date" class="field-input" />
+        </div>
+        <div class="field-group half">
+          <label class="field-label">City</label>
+          <input type="text" id="e_city" class="field-input" />
+        </div>
+      </div>
+      <div class="modal-btns">
+        <button class="submit-btn" onclick="saveEdit()">💾 Save</button>
+        <button class="cancel-btn" onclick="closeEdit()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // Auto-init admin page
+    window.addEventListener('DOMContentLoaded', () => {
+      if (isAdminLoggedIn()) showAdminPanel();
+    });
+  </script>
+</body>
+</html>

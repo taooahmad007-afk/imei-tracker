@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Report Stolen Phone – USA Mobile Zone</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-block">
+        <div class="logo-icon">📱</div>
+        <div class="logo-text">
+          <span class="brand-name">USA Mobile Zone</span>
+          <span class="brand-location">Muzaffarabad</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">🔍 Check IMEI</a>
+        <a href="report.html" class="nav-link active">⚠️ Report Stolen</a>
+        <a href="admin.html" class="nav-link admin-link">🔐 Admin</a>
+      </nav>
+    </div>
+    <div class="tagline-bar">
+      <span class="tagline-en">Check Before You Buy — Stay Safe from Stolen Phones</span>
+      <span class="tagline-ur">خریدنے سے پہلے چیک کریں — چوری شدہ فون سے محفوظ رہیں</span>
+    </div>
+  </header>
+
+  <main class="main-wrap">
+    <section class="form-section">
+      <div class="form-header">
+        <h1 class="form-title">⚠️ Report a Stolen Phone</h1>
+        <p class="form-sub">Submit details below. Your report goes to admin for review before being published.</p>
+        <p class="form-sub-ur">نیچے تفصیل درج کریں۔ آپ کی رپورٹ شائع ہونے سے پہلے ایڈمن چیک کرے گا۔</p>
+      </div>
+
+      <div class="form-card" id="reportFormCard">
+        <div class="field-group">
+          <label class="field-label">
+            IMEI Number <span class="required">*</span>
+            <span class="field-label-ur">IMEI نمبر</span>
+          </label>
+          <input type="tel" id="r_imei" class="field-input" placeholder="15-digit IMEI (e.g. 353679100000001)" maxlength="17" inputmode="numeric" oninput="formatIMEI(this)" />
+          <div class="field-hint">📌 Dial *#06# on the stolen phone (if possible)</div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">
+            Phone Model
+            <span class="field-label-ur">فون کا ماڈل</span>
+          </label>
+          <input type="text" id="r_model" class="field-input" placeholder="e.g. Samsung Galaxy A54, iPhone 13" />
+        </div>
+
+        <div class="field-row">
+          <div class="field-group half">
+            <label class="field-label">
+              Owner Name
+              <span class="field-label-ur">مالک کا نام</span>
+            </label>
+            <input type="text" id="r_owner" class="field-input" placeholder="Your name" />
+          </div>
+          <div class="field-group half">
+            <label class="field-label">
+              Contact Number
+              <span class="field-label-ur">رابطہ نمبر</span>
+            </label>
+            <input type="tel" id="r_contact" class="field-input" placeholder="03XX-XXXXXXX" />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group half">
+            <label class="field-label">
+              Date of Theft <span class="required">*</span>
+              <span class="field-label-ur">چوری کی تاریخ</span>
+            </label>
+            <input type="date" id="r_date" class="field-input" />
+          </div>
+          <div class="field-group half">
+            <label class="field-label">
+              City
+              <span class="field-label-ur">شہر</span>
+            </label>
+            <input type="text" id="r_city" class="field-input" value="Muzaffarabad" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">
+            Additional Notes
+            <span class="field-label-ur">اضافی معلومات</span>
+          </label>
+          <textarea id="r_notes" class="field-input field-textarea" placeholder="Any additional details about the theft..."></textarea>
+        </div>
+
+        <div class="disclaimer-box">
+          <span class="disclaimer-icon">⚠️</span>
+          <span>By submitting, you confirm this report is truthful. False reports may have legal consequences.</span>
+        </div>
+
+        <button class="submit-btn" onclick="submitReport()">
+          📤 Submit Report / رپورٹ جمع کریں
+        </button>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div id="successState" class="success-state hidden">
+        <div class="success-icon">✅</div>
+        <h2 class="success-title">Report Submitted!</h2>
+        <h2 class="success-title-ur">رپورٹ جمع ہو گئی!</h2>
+        <p class="success-msg">Your report is now pending admin approval. It will appear in the system once verified.</p>
+        <p class="success-msg-ur">آپ کی رپورٹ ایڈمن کی منظوری کا انتظار کر رہی ہے۔</p>
+        <div class="success-ref" id="reportRef"></div>
+        <div class="success-btns">
+          <button class="action-btn" onclick="submitAnother()">📝 Submit Another</button>
+          <a href="index.html" class="action-btn">🔍 Check IMEI</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 USA Mobile Zone, Muzaffarabad | Powered by Community Safety</p>
+  </footer>
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,926 @@
+/* ─────────────────────────────────────────
+   USA Mobile Zone — IMEI Tracker
+   Mobile-first, Urdu+English, Clean & Fast
+   ───────────────────────────────────────── */
+
+:root {
+  --green:      #16a34a;
+  --green-bg:   #dcfce7;
+  --green-border: #86efac;
+  --red:        #dc2626;
+  --red-bg:     #fee2e2;
+  --red-border: #fca5a5;
+  --orange:     #ea580c;
+  --blue:       #2563eb;
+  --navy:       #0f172a;
+  --slate:      #334155;
+  --muted:      #64748b;
+  --surface:    #f8fafc;
+  --card:       #ffffff;
+  --border:     #e2e8f0;
+  --brand:      #1e40af;
+  --brand-dark: #1e3a8a;
+  --brand-light:#dbeafe;
+  --radius:     12px;
+  --shadow:     0 2px 16px rgba(0,0,0,0.08);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.14);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Baloo Bhai 2', 'Segoe UI', sans-serif;
+  background: var(--surface);
+  color: var(--navy);
+  font-size: 16px;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(30,58,138,0.3);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  gap: 8px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.logo-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: white;
+}
+
+.logo-icon {
+  font-size: 28px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.brand-name {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+
+.brand-location {
+  display: block;
+  font-size: 11px;
+  opacity: 0.8;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 7px;
+  transition: all 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.admin-link { opacity: 0.7; font-size: 12px; }
+
+.tagline-bar {
+  background: rgba(0,0,0,0.2);
+  text-align: center;
+  padding: 5px 16px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tagline-en { color: rgba(255,255,255,0.9); }
+.tagline-ur { color: rgba(255,255,255,0.75); font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; }
+
+/* ── MAIN WRAP ── */
+.main-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+/* ── HERO ── */
+.hero-section { margin-bottom: 32px; }
+
+.hero-text { text-align: center; margin-bottom: 20px; }
+
+.hero-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -1px;
+}
+
+.hero-title .accent { color: var(--brand); }
+
+.hero-sub { font-size: 15px; color: var(--slate); margin-top: 4px; }
+.hero-sub-ur { font-size: 14px; color: var(--muted); font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; }
+
+/* ── SEARCH CARD ── */
+.search-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--border);
+}
+
+.imei-hint {
+  background: var(--brand-light);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--brand);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.input-wrap {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.imei-input {
+  width: 100%;
+  font-size: 22px;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 16px 60px 16px 18px;
+  border: 2.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--navy);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.imei-input:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+  background: white;
+}
+
+.imei-input.shake { animation: shake 0.4s ease; }
+
+.imei-counter {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.check-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Baloo Bhai 2', sans-serif;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(30,64,175,0.3);
+}
+
+.check-btn:hover  { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(30,64,175,0.4); }
+.check-btn:active { transform: translateY(0); }
+.check-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+.btn-icon { font-size: 18px; }
+.btn-icon.spin { animation: spin 0.8s linear infinite; }
+
+.sample-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.sample-label { font-size: 12px; color: var(--muted); }
+
+.sample-btn {
+  font-size: 12px;
+  font-family: 'Baloo Bhai 2', sans-serif;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 2px solid;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sample-btn.clean  { border-color: var(--green); color: var(--green); background: transparent; }
+.sample-btn.clean:hover  { background: var(--green-bg); }
+.sample-btn.stolen { border-color: var(--red);   color: var(--red);   background: transparent; }
+.sample-btn.stolen:hover { background: var(--red-bg); }
+
+/* ── RESULT ── */
+.result-area { margin-top: 20px; }
+.result-area.hidden { display: none; }
+
+.result-card {
+  border-radius: var(--radius);
+  padding: 24px;
+  border: 2px solid;
+  animation: fadeIn 0.4s ease;
+}
+
+.result-card.clean  { background: var(--green-bg); border-color: var(--green-border); }
+.result-card.stolen { background: var(--red-bg);   border-color: var(--red-border); }
+
+.result-icon { font-size: 48px; text-align: center; margin-bottom: 8px; }
+
+.result-title { font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 16px; }
+.clean-title  { color: var(--green); }
+.stolen-title { color: var(--red); }
+
+.result-details { margin-bottom: 16px; }
+
+.detail-row {
+  padding: 6px 0;
+  font-size: 15px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.detail-row:last-child { border-bottom: none; }
+
+.detail-label { font-weight: 700; color: var(--slate); margin-right: 6px; }
+.detail-val { color: var(--navy); }
+.mono { font-family: 'Courier New', monospace; letter-spacing: 1px; font-weight: 700; }
+
+.clean-msg  { color: var(--green); font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; font-size: 14px; }
+.stolen-msg { color: var(--red); font-size: 16px; font-weight: 700; font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; }
+.safe-note  { color: var(--green); font-size: 13px; font-weight: 600; }
+
+.result-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-btn {
+  font-family: 'Baloo Bhai 2', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.share-btn { background: #25d366; color: white; }
+.share-btn:hover { background: #1da851; }
+.qr-btn { background: var(--navy); color: white; }
+.qr-btn:hover { opacity: 0.9; }
+
+.qr-area { margin-top: 16px; text-align: center; }
+.qr-area.hidden { display: none; }
+.qr-area #qrcode { display: inline-block; margin-bottom: 8px; }
+.qr-label { font-size: 12px; color: var(--muted); }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-top: 24px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.stat-item { text-align: center; flex: 1; }
+.stat-num  { display: block; font-size: 24px; font-weight: 800; color: var(--brand); }
+.stat-lbl  { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+.stat-divider { width: 1px; height: 40px; background: var(--border); }
+
+/* ── HOW SECTION ── */
+.how-section { margin-bottom: 32px; }
+
+.section-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.ur-inline { font-family: 'Noto Nastaliq Urdu', serif; font-size: 16px; color: var(--muted); direction: rtl; }
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.step-card {
+  background: white;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 16px;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.step-num {
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  background: var(--brand);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-icon { font-size: 24px; margin-bottom: 6px; }
+.step-text { font-size: 13px; color: var(--slate); line-height: 1.5; }
+.step-text strong { color: var(--navy); }
+.ur-text { font-family: 'Noto Nastaliq Urdu', serif; display: block; direction: rtl; font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+/* ── CONTACT ── */
+.contact-section { margin-bottom: 24px; }
+
+.contact-card {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--brand) 100%);
+  color: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.contact-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.contact-sub   { font-size: 13px; opacity: 0.8; margin-bottom: 16px; }
+
+.contact-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+
+.contact-btn {
+  font-family: 'Baloo Bhai 2', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.call-btn { background: white; color: var(--brand); }
+.call-btn:hover { background: var(--brand-light); }
+.wa-btn   { background: #25d366; color: white; }
+.wa-btn:hover { background: #1da851; }
+
+.contact-address { font-size: 13px; opacity: 0.75; }
+
+/* ── POPUP ── */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+.popup-overlay.hidden { display: none; }
+
+.popup-box {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 24px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.stolen-popup { border: 3px solid var(--red); }
+
+.popup-icon { font-size: 56px; margin-bottom: 12px; }
+.popup-title { font-size: 24px; font-weight: 800; color: var(--red); }
+.popup-title-ur { font-size: 20px; font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; color: var(--red); margin-bottom: 12px; }
+.popup-msg { font-size: 14px; color: var(--slate); margin-bottom: 6px; }
+.popup-msg-ur { font-size: 13px; font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; color: var(--slate); margin-bottom: 20px; }
+
+.popup-close-btn {
+  background: var(--red);
+  color: white;
+  border: none;
+  font-family: 'Baloo Bhai 2', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.popup-close-btn:hover { background: #b91c1c; }
+
+/* ── FORM SECTION ── */
+.form-section { max-width: 560px; margin: 0 auto; }
+
+.form-header { text-align: center; margin-bottom: 24px; }
+.form-title  { font-size: 26px; font-weight: 800; color: var(--navy); }
+.form-sub    { font-size: 14px; color: var(--slate); margin-top: 6px; }
+.form-sub-ur { font-size: 13px; color: var(--muted); font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; margin-top: 4px; }
+
+.form-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+
+.field-group { margin-bottom: 16px; }
+.field-group.half { width: 100%; }
+
+.field-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.field-row .field-group { flex: 1; min-width: 140px; }
+
+.field-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate);
+  margin-bottom: 6px;
+}
+
+.field-label-ur { font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; font-weight: 400; color: var(--muted); font-size: 12px; }
+
+.required { color: var(--red); font-size: 14px; }
+
+.field-input {
+  width: 100%;
+  padding: 11px 14px;
+  font-size: 15px;
+  font-family: 'Baloo Bhai 2', sans-serif;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--navy);
+  outline: none;
+  transition: all 0.2s;
+}
+
+.field-input:focus { border-color: var(--brand); background: white; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+
+.field-textarea { min-height: 80px; resize: vertical; }
+
+.field-hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+.disclaimer-box {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #92400e;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--green) 0%, #15803d 100%);
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  font-family: 'Baloo Bhai 2', sans-serif;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(22,163,74,0.3);
+}
+
+.submit-btn:hover  { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(22,163,74,0.4); }
+.submit-btn:active { transform: translateY(0); }
+
+/* ── SUCCESS STATE ── */
+.success-state { text-align: center; padding: 32px 0; }
+.success-state.hidden { display: none; }
+.success-icon  { font-size: 64px; margin-bottom: 12px; }
+.success-title { font-size: 26px; font-weight: 800; color: var(--green); }
+.success-title-ur { font-size: 22px; font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; color: var(--green); margin-bottom: 12px; }
+.success-msg   { font-size: 14px; color: var(--slate); margin-bottom: 4px; }
+.success-msg-ur { font-size: 13px; font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; color: var(--muted); }
+.success-ref   { font-size: 16px; font-weight: 700; color: var(--brand); margin: 16px 0; font-family: monospace; }
+.success-btns  { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+
+/* ── FOOTER ── */
+.site-footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.footer-ur { font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; }
+
+/* ─────────────────────────────────────────
+   ADMIN STYLES
+   ───────────────────────────────────────── */
+
+.admin-body { background: #0f172a; }
+
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+}
+
+.login-card {
+  background: white;
+  border-radius: 16px;
+  padding: 36px 28px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.login-logo  { font-size: 48px; margin-bottom: 12px; }
+.login-title { font-size: 24px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+.login-sub   { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.login-error { color: var(--red); font-size: 13px; margin-bottom: 8px; }
+.login-error.hidden { display: none; }
+.login-hint  { font-size: 11px; color: var(--muted); margin-top: 12px; }
+
+.admin-header {
+  background: white;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow);
+}
+
+.admin-logo { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 800; color: var(--navy); }
+.admin-logo .logo-icon { font-size: 22px; }
+
+.admin-nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+
+.tab-btn {
+  font-family: 'Baloo Bhai 2', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 7px;
+  border: 2px solid var(--border);
+  background: white;
+  color: var(--slate);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.tab-btn:hover { border-color: var(--brand); color: var(--brand); }
+.tab-btn.active { background: var(--brand); border-color: var(--brand); color: white; }
+
+.badge {
+  background: var(--red);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 10px;
+  margin-left: 4px;
+}
+
+.logout-btn {
+  font-family: 'Baloo Bhai 2', sans-serif;
+  font-size: 13px;
+  padding: 6px 12px;
+  border: none;
+  background: var(--red-bg);
+  color: var(--red);
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.admin-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.tab-panel.hidden { display: none; }
+
+.panel-title { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 16px; }
+
+.panel-header-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.panel-header-row .panel-title { margin-bottom: 0; }
+
+.search-mini {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-family: 'Baloo Bhai 2', sans-serif;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+  min-width: 200px;
+}
+
+.search-mini:focus { border-color: var(--brand); }
+
+.records-list { display: flex; flex-direction: column; gap: 12px; }
+
+.record-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px;
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.pending-card  { border-left: 4px solid var(--orange); }
+.approved-card { border-left: 4px solid var(--green); }
+
+.record-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.record-imei { font-size: 17px; font-weight: 800; letter-spacing: 1.5px; color: var(--navy); }
+
+.record-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.pending-badge  { background: #fff7ed; color: var(--orange); border: 1px solid #fed7aa; }
+.approved-badge { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+
+.record-body { margin-bottom: 12px; }
+.record-row  { font-size: 14px; color: var(--slate); padding: 3px 0; }
+.record-row.small { font-size: 12px; color: var(--muted); }
+
+.record-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.approve-btn, .reject-btn, .edit-btn {
+  font-family: 'Baloo Bhai 2', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.approve-btn { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.approve-btn:hover { background: var(--green); color: white; }
+.reject-btn  { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.reject-btn:hover  { background: var(--red); color: white; }
+.edit-btn    { background: var(--brand-light); color: var(--brand); border: 1px solid #93c5fd; }
+.edit-btn:hover    { background: var(--brand); color: white; }
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--muted);
+  font-size: 16px;
+  background: white;
+  border-radius: var(--radius);
+  border: 2px dashed var(--border);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-big-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 2px solid;
+}
+
+.stat-big-card.green { border-color: var(--green-border); }
+.stat-big-card.orange { border-color: #fed7aa; }
+.stat-big-card.blue { border-color: #93c5fd; }
+.stat-big-card.red { border-color: var(--red-border); }
+
+.stat-big-num { font-size: 40px; font-weight: 800; color: var(--navy); }
+.stat-big-card.green .stat-big-num { color: var(--green); }
+.stat-big-card.orange .stat-big-num { color: var(--orange); }
+.stat-big-card.blue .stat-big-num { color: var(--blue); }
+.stat-big-card.red .stat-big-num { color: var(--red); }
+.stat-big-lbl { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 600; }
+
+.reset-section { padding-top: 8px; }
+
+.danger-btn {
+  font-family: 'Baloo Bhai 2', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 2px solid var(--red-border);
+  background: var(--red-bg);
+  color: var(--red);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.danger-btn:hover { background: var(--red); color: white; }
+
+/* Edit Modal */
+.edit-modal { max-width: 560px; }
+.modal-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+.modal-btns { display: flex; gap: 10px; margin-top: 16px; }
+.cancel-btn {
+  flex: 1;
+  font-family: 'Baloo Bhai 2', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  background: white;
+  color: var(--slate);
+  cursor: pointer;
+}
+.modal-btns .submit-btn { flex: 2; }
+
+.add-message {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.add-message.success { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.add-message.hidden  { display: none; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: var(--navy);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 9999;
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  max-width: 90vw;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ── HIDDEN UTIL ── */
+.hidden { display: none !important; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%  { transform: translateX(-6px); }
+  40%  { transform: translateX(6px); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(4px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .hero-title    { font-size: 28px; }
+  .imei-input    { font-size: 18px; letter-spacing: 1px; }
+  .check-btn     { font-size: 16px; }
+  .steps-grid    { grid-template-columns: 1fr 1fr; }
+  .stats-grid    { grid-template-columns: 1fr 1fr; }
+  .brand-name    { font-size: 15px; }
+  .nav-link      { font-size: 12px; padding: 5px 8px; }
+  .tagline-bar   { font-size: 11px; gap: 8px; }
+  .admin-nav     { gap: 4px; }
+  .tab-btn       { font-size: 12px; padding: 5px 10px; }
+  .record-imei   { font-size: 14px; }
+  .field-row     { flex-direction: column; }
+  .field-row .field-group { min-width: unset; }
+}

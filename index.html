@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>USA Mobile Zone – Stolen Phone Checker | Muzaffarabad</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-block">
+        <div class="logo-icon">📱</div>
+        <div class="logo-text">
+          <span class="brand-name">USA Mobile Zone</span>
+          <span class="brand-location">Muzaffarabad</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link active">🔍 Check IMEI</a>
+        <a href="report.html" class="nav-link">⚠️ Report Stolen</a>
+        <a href="admin.html" class="nav-link admin-link">🔐 Admin</a>
+      </nav>
+    </div>
+    <div class="tagline-bar">
+      <span class="tagline-en">Check Before You Buy — Stay Safe from Stolen Phones</span>
+      <span class="tagline-ur">خریدنے سے پہلے چیک کریں — چوری شدہ فون سے محفوظ رہیں</span>
+    </div>
+  </header>
+
+  <!-- ── HERO SEARCH ── -->
+  <main class="main-wrap">
+    <section class="hero-section">
+      <div class="hero-text">
+        <h1 class="hero-title">IMEI <span class="accent">Verify</span></h1>
+        <p class="hero-sub">Enter a phone's IMEI to check if it's stolen</p>
+        <p class="hero-sub-ur">چیک کریں کہ فون چوری کا ہے یا نہیں</p>
+      </div>
+
+      <div class="search-card">
+        <div class="imei-hint">📌 Dial <strong>*#06#</strong> on the phone to get IMEI</div>
+        <div class="input-wrap">
+          <input
+            type="tel"
+            id="imeiInput"
+            class="imei-input"
+            placeholder="Enter 15-digit IMEI number"
+            maxlength="17"
+            inputmode="numeric"
+            autocomplete="off"
+          />
+          <div class="imei-counter"><span id="charCount">0</span>/15</div>
+        </div>
+        <button class="check-btn" id="checkBtn" onclick="checkIMEI()">
+          <span class="btn-icon">🔍</span> Check IMEI
+        </button>
+        <div class="sample-btns">
+          <span class="sample-label">Try sample:</span>
+          <button class="sample-btn clean" onclick="loadSample('353679100000001')">✅ Clean</button>
+          <button class="sample-btn stolen" onclick="loadSample('353679100000002')">❌ Stolen</button>
+        </div>
+      </div>
+
+      <!-- RESULT AREA -->
+      <div id="resultArea" class="result-area hidden">
+        <div id="resultCard" class="result-card">
+          <div id="resultIcon" class="result-icon"></div>
+          <div id="resultTitle" class="result-title"></div>
+          <div id="resultDetails" class="result-details"></div>
+          <div class="result-actions">
+            <button class="action-btn share-btn" id="shareWABtn" onclick="shareWhatsApp()" style="display:none">
+              📲 Share on WhatsApp
+            </button>
+            <button class="action-btn qr-btn" onclick="toggleQR()">📷 QR Code</button>
+          </div>
+          <div id="qrCodeArea" class="qr-area hidden">
+            <div id="qrcode"></div>
+            <p class="qr-label">Scan to verify this IMEI</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS BAR -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-num" id="statStolen">—</span>
+          <span class="stat-lbl">Stolen Phones</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num" id="statChecks">—</span>
+          <span class="stat-lbl">Checks Today</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">MZD</span>
+          <span class="stat-lbl">Muzaffarabad</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── HOW TO USE ── -->
+    <section class="how-section">
+      <h2 class="section-title">How to Use <span class="ur-inline">/ کیسے استعمال کریں</span></h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-icon">📱</div>
+          <div class="step-text">Dial <strong>*#06#</strong> on the phone<br/><span class="ur-text">فون پر *#06# ڈائل کریں</span></div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-icon">⌨️</div>
+          <div class="step-text">Enter the 15-digit IMEI<br/><span class="ur-text">15 ہندسوں کا IMEI درج کریں</span></div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-icon">🟢</div>
+          <div class="step-text">See Green = Safe to buy<br/><span class="ur-text">سبز = خریدنا محفوظ ہے</span></div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-icon">🔴</div>
+          <div class="step-text">See Red = Do NOT buy!<br/><span class="ur-text">لال = ہرگز نہ خریدیں!</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section class="contact-section">
+      <div class="contact-card">
+        <div class="contact-title">📞 Contact USA Mobile Zone</div>
+        <div class="contact-sub">Report or inquire about stolen phones</div>
+        <div class="contact-btns">
+          <a href="tel:+923001234567" class="contact-btn call-btn">📞 Call Now</a>
+          <a href="https://wa.me/923001234567?text=Hello%2C%20I%20want%20to%20check%20a%20stolen%20phone%20IMEI" target="_blank" class="contact-btn wa-btn">💬 WhatsApp</a>
+        </div>
+        <div class="contact-address">📍 Main Bazaar, Muzaffarabad, AJK</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 USA Mobile Zone, Muzaffarabad | Powered by Community Safety</p>
+    <p class="footer-ur">چوری شدہ فون کی خرید و فروخت جرم ہے</p>
+  </footer>
+
+  <!-- STOLEN POPUP -->
+  <div id="stolenPopup" class="popup-overlay hidden">
+    <div class="popup-box stolen-popup">
+      <div class="popup-icon">🚨</div>
+      <h2 class="popup-title">STOLEN PHONE!</h2>
+      <h2 class="popup-title-ur">چوری شدہ فون!</h2>
+      <p class="popup-msg">This phone has been reported stolen. <strong>Do NOT purchase it!</strong></p>
+      <p class="popup-msg-ur">یہ فون چوری شدہ رپورٹ ہوا ہے۔ <strong>ہرگز نہ خریدیں!</strong></p>
+      <button class="popup-close-btn" onclick="closePopup()">I Understand / سمجھ گیا</button>
+    </div>
+  </div>
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
